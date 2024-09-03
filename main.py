@@ -1,8 +1,9 @@
 import requests
 import spotipy
 import requests
+import lyricsgenius
 from spotipy import SpotifyClientCredentials
-from creds import SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,GENIUS_CLIENT_SECRET,GENIUS_CLEINT_ID
+from creds import SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,GENIUS_ACCSESS_TOKEN
 from bs4 import BeautifulSoup
 
 def Top100():
@@ -24,6 +25,17 @@ def ArtistTop10Songs(artist_id):
     ))
     for track in  sp.artist_top_tracks(artist_id)['tracks'][:10]:
         print()
-print(Top100())
+
+def GetLyrics(SongName,ArtistName):    
+    genius = lyricsgenius.Genius(GENIUS_ACCSESS_TOKEN)        
+    genius.verbose = False
+    genius.remove_section_headers = True
+    song=genius.search_song(SongName, ArtistName)
+    return song.lyrics
+
+   
+    
+#print(Top100())
+print(GetLyrics('Shape of You', 'Ed Sheeran'))
 
 
