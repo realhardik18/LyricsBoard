@@ -5,6 +5,7 @@ from nltk.tokenize import word_tokenize
 import nltk
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import os
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -42,13 +43,16 @@ def get_top_keywords(text, n=10):
     top_keywords = word_counts.most_common(n)
     return top_keywords
 
-# Example usage
-corpus = get_text('data\Central-Cee.txt')
 
-top_keywords = dict(get_top_keywords(corpus,40))
+def generate(filename):
+    corpus = get_text(f'data\{filename}')
+    top_keywords = dict(get_top_keywords(corpus,30))
+    plt.figure()
+    Wordcloud=wordcloud.generate_from_frequencies(frequencies=top_keywords)    
+    plt.imshow(Wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.savefig(f"{filename[:-4]}.png", format="png", bbox_inches="tight")
+    #plt.show()
 
-plt.figure()
-wordcloud=wordcloud.generate_from_frequencies(frequencies=top_keywords)
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-plt.show()
+for file in os.listdir('data'):
+    generate(file)
