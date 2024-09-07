@@ -1,5 +1,4 @@
 import spotipy
-import requests
 import lyricsgenius
 from spotipy import SpotifyClientCredentials
 from creds import SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,GENIUS_ACCSESS_TOKEN
